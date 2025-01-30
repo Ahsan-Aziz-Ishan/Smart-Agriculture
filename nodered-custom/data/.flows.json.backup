@@ -1,0 +1,682 @@
+[
+    {
+        "id": "9f6d8303fea14cfb",
+        "type": "tab",
+        "label": "Smart Agriculture",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "dde0cc6d0e5d357d",
+        "type": "group",
+        "z": "9f6d8303fea14cfb",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "2b1cf69b21f0d3d3"
+        ],
+        "x": 214,
+        "y": 639,
+        "w": 212,
+        "h": 82
+    },
+    {
+        "id": "a928ba0.2d1f748",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "172.16.0.101",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "compatmode": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "ae2aceeadfb4b296",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "7b6c645b.5efc9c",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "host.docker.internal",
+        "port": "3306",
+        "db": "NODERED",
+        "tz": "",
+        "charset": ""
+    },
+    {
+        "id": "e38ada7c23eea3a7",
+        "type": "global-config",
+        "name": "global-config",
+        "env": []
+    },
+    {
+        "id": "f373fb80f9b86423",
+        "type": "amqp-broker",
+        "name": "",
+        "host": "host.docker.internal",
+        "port": "5672",
+        "vhost": "/",
+        "tls": false,
+        "credsFromSettings": false
+    },
+    {
+        "id": "mysql-config",
+        "type": "MySQLdatabase",
+        "name": "MySQL",
+        "host": "host.docker.internal",
+        "port": "3306",
+        "db": "IoTData"
+    },
+    {
+        "id": "3fb96dba9d5da216",
+        "type": "influxdb",
+        "hostname": "172.16.0.104",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "InfluxV2",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://172.16.0.104:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "f64b4fd429cab8c6",
+        "type": "telegram bot",
+        "botname": "Smart Agri Univaq",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": "300",
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "134ae094d355c06d",
+        "type": "chatbot-telegram-node",
+        "botname": "Smart Agri Bot",
+        "usernames": "",
+        "polling": "1000",
+        "store": "",
+        "log": "",
+        "debug": false,
+        "skipMediaFiles": false,
+        "webHook": "",
+        "connectMode": "polling",
+        "storeMessages": true,
+        "enableMissionControl": false,
+        "inspectMessages": true,
+        "chatbotId": ""
+    },
+    {
+        "id": "b25684cafc63f33f",
+        "type": "chatbot-telegram-node",
+        "botname": "Smart Agri Bot",
+        "usernames": "",
+        "polling": "1000",
+        "store": "",
+        "log": "",
+        "debug": false,
+        "skipMediaFiles": false,
+        "webHook": "",
+        "connectMode": "polling",
+        "storeMessages": true,
+        "enableMissionControl": false,
+        "inspectMessages": true,
+        "chatbotId": ""
+    },
+    {
+        "id": "1380860af787f9d0",
+        "type": "ui_tab",
+        "name": "Smart Agriculture",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "a43974e6b6ef8326",
+        "type": "ui_group",
+        "name": "Sensor Configurations",
+        "tab": "1380860af787f9d0",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "5b15036655893e18",
+        "type": "mqtt in",
+        "z": "9f6d8303fea14cfb",
+        "name": "Sensor Listener",
+        "topic": "smart-sensors",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "a928ba0.2d1f748",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 40,
+        "wires": [
+            [
+                "8c2f4d547d5fa097"
+            ]
+        ]
+    },
+    {
+        "id": "8c2f4d547d5fa097",
+        "type": "influxdb out",
+        "z": "9f6d8303fea14cfb",
+        "influxdb": "3fb96dba9d5da216",
+        "name": "",
+        "measurement": "sensor_data",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "univaq",
+        "bucket": "se4iot",
+        "x": 420,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "9cc809d54b9c5640",
+        "type": "function",
+        "z": "9f6d8303fea14cfb",
+        "name": "Query Sensor Data",
+        "func": "msg.query = `\nfrom(bucket: \"se4iot\")\n  |> range(start: -1s)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sensor_data\")\n  |> aggregateWindow(every: 30s, fn: last, createEmpty: false)\n  |> yield(name: \"last\")\n`;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 280,
+        "wires": [
+            [
+                "52986e883f0bdd30"
+            ]
+        ]
+    },
+    {
+        "id": "65ab8d5242ec70da",
+        "type": "inject",
+        "z": "9f6d8303fea14cfb",
+        "name": "Trigger Influx Query",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 240,
+        "wires": [
+            [
+                "9cc809d54b9c5640"
+            ]
+        ]
+    },
+    {
+        "id": "52986e883f0bdd30",
+        "type": "influxdb in",
+        "z": "9f6d8303fea14cfb",
+        "influxdb": "3fb96dba9d5da216",
+        "name": "InfluxDB",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "univaq",
+        "x": 600,
+        "y": 360,
+        "wires": [
+            [
+                "bbbad50cc84d86f6"
+            ]
+        ]
+    },
+    {
+        "id": "03f907451b029a8e",
+        "type": "debug",
+        "z": "9f6d8303fea14cfb",
+        "name": "Message",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.content",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "bbbad50cc84d86f6",
+        "type": "function",
+        "z": "9f6d8303fea14cfb",
+        "name": "Compare Threshold",
+        "func": "if (global.get(\"alerts\").enabled) {\n    let conf = global.get(\"sensor\")?.conf?.payload;\n    let obj = {\"payload\": {}}\n    for (let index = 0; index < msg.payload.length; index++) {\n        const element = msg.payload[index];\n        \n        if (element[\"_field\"] === \"humidity\") {\n            if (element[\"_value\"] > conf.humidity.max || element[\"_value\"] < conf.humidity.min) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] +\n                    \", Humidity above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n        if (element[\"_field\"] === \"temperature\") {\n            if (element[\"_value\"] > conf.temperature.max ) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \n                    \", Temperature above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n        if (element[\"_field\"] ===  \"soilMoisture\") {\n            if (element[\"_value\"] > conf.soilMoisture.max || element[\"_value\"] < conf.soilMoisture.min) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \n                    \", Soil Moisture above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n\n        if (element[\"_field\"] === \"lightIntensity\") {\n            if (element[\"_value\"] > conf.lightIntensity.max) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] +\n                    \", Light Intensity above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n\n        if (element[\"_field\"] === \"livestock_heartbeat\") {\n            if ((element[\"animal\"] === \"chicken\" && element[\"_value\"] > conf.livestock.chicken.max) || (element[\"animal\"] === \"cow\" && element[\"_value\"] > conf.livestock.cow.max))  {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \", Animal = \" + element[\"animal\"] +\n                    \", AnimalId - \" + element[\"animalId\"] + \", livestock heartbeat above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n            \n    }\n    obj.payload[\"type\"] = \"message\"\n    // obj.payload[\"chatId\"] = [-1002257310350]\n    obj.payload[\"chatId\"] = [8097139158]\n    if (obj.payload.content != null) {\n        return obj\n    } \n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 420,
+        "wires": [
+            [
+                "03f907451b029a8e",
+                "5d8e43e9044aee45",
+                "3569f64d91151295"
+            ]
+        ]
+    },
+    {
+        "id": "5d8e43e9044aee45",
+        "type": "telegram sender",
+        "z": "9f6d8303fea14cfb",
+        "name": "Send Alert To Bot",
+        "bot": "f64b4fd429cab8c6",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 750,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "04031fe286528e06",
+        "type": "ui_switch",
+        "z": "9f6d8303fea14cfb",
+        "name": "",
+        "label": "Enable Alerts",
+        "tooltip": "",
+        "group": "a43974e6b6ef8326",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 490,
+        "y": 520,
+        "wires": [
+            [
+                "4efc5858d98a3b60"
+            ]
+        ]
+    },
+    {
+        "id": "4a96b7292f4c5929",
+        "type": "inject",
+        "z": "9f6d8303fea14cfb",
+        "name": "Trigger",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 420,
+        "wires": [
+            [
+                "01023986df68eb53"
+            ]
+        ]
+    },
+    {
+        "id": "01023986df68eb53",
+        "type": "function",
+        "z": "9f6d8303fea14cfb",
+        "name": "Trigger Alert Switch",
+        "func": "msg.payload = !global.get(\"alerts\").enabled\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 440,
+        "wires": [
+            [
+                "04031fe286528e06"
+            ]
+        ]
+    },
+    {
+        "id": "4efc5858d98a3b60",
+        "type": "change",
+        "z": "9f6d8303fea14cfb",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "alerts.enabled",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "89378ae3fe7646e2",
+        "type": "ui_toast",
+        "z": "9f6d8303fea14cfb",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "Show Alert Dialog",
+        "x": 990,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3569f64d91151295",
+        "type": "function",
+        "z": "9f6d8303fea14cfb",
+        "name": "Parse Alert Messge",
+        "func": "\nreturn { payload: msg.payload.content} ;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 300,
+        "wires": [
+            [
+                "89378ae3fe7646e2"
+            ]
+        ]
+    },
+    {
+        "id": "be0ecefb77a16e45",
+        "type": "debug",
+        "z": "9f6d8303fea14cfb",
+        "name": "Debug Config",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "3b86352fd9b98737",
+        "type": "change",
+        "z": "9f6d8303fea14cfb",
+        "name": "Update Configuration",
+        "rules": [
+            {
+                "t": "set",
+                "p": "sensor.conf",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2b1cf69b21f0d3d3",
+        "type": "ui_template",
+        "z": "9f6d8303fea14cfb",
+        "g": "dde0cc6d0e5d357d",
+        "group": "a43974e6b6ef8326",
+        "name": "Sensor Config",
+        "order": 2,
+        "width": "0",
+        "height": "0",
+        "format": "<!DOCTYPE html>\n<html>\n\n<head>\n  <style>\n    * {\n      box-sizing: border-box;\n      margin: 0;\n      padding: 0;\n    }\n\n    body {\n      font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;\n      padding: 20px;\n      background: #f5f5f5;\n    }\n\n    .dashboard {\n      max-width: 1200px;\n      margin: 0 auto;\n    }\n\n    .grid {\n      display: grid;\n      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n      gap: 20px;\n      margin-bottom: 20px;\n    }\n\n    .card {\n      background: white;\n      border-radius: 8px;\n      padding: 20px;\n      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n    }\n\n    .card-title {\n      color: #2c3e50;\n      font-size: 1.1em;\n      font-weight: 600;\n      margin-bottom: 15px;\n      display: flex;\n      align-items: center;\n      gap: 8px;\n    }\n\n    .card-title i {\n      color: #3498db;\n    }\n\n    .input-group {\n      display: grid;\n      grid-template-columns: 1fr 1fr;\n      gap: 15px;\n      margin-bottom: 10px;\n    }\n\n    .input-wrapper {\n      display: flex;\n      flex-direction: column;\n    }\n\n    label {\n      font-size: 0.9em;\n      color: #666;\n      margin-bottom: 5px;\n    }\n\n    input[type=\"number\"] {\n      width: 100%;\n      padding: 8px 12px;\n      border: 1px solid #ddd;\n      border-radius: 4px;\n      font-size: 14px;\n      transition: border-color 0.2s;\n    }\n\n    input[type=\"number\"]:focus {\n      border-color: #3498db;\n      outline: none;\n    }\n\n    .livestock-card {\n      grid-column: span 2;\n    }\n\n    .livestock-section {\n      margin-bottom: 20px;\n    }\n\n    .livestock-section:last-child {\n      margin-bottom: 0;\n    }\n\n    .button-container {\n      display: flex;\n      justify-content: flex-end;\n      padding: 20px 0;\n    }\n\n    button {\n      background: #3498db;\n      color: white;\n      border: none;\n      padding: 10px 20px;\n      border-radius: 4px;\n      cursor: pointer;\n      font-size: 14px;\n      transition: background-color 0.2s;\n    }\n\n    button:hover {\n      background: #2980b9;\n    }\n\n    @media (max-width: 768px) {\n      .livestock-card {\n        grid-column: span 1;\n      }\n    }\n  </style>\n</head>\n\n<body>\n  <div class=\"dashboard\">\n    <div class=\"grid\">\n      <!-- Humidity Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>💧</i> Humidity Threshold\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (%)</label>\n            <input type=\"number\" ng-model=\"humidity_min\" min=\"0\" max=\"100\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (%)</label>\n            <input type=\"number\" ng-model=\"humidity_max\" min=\"0\" max=\"100\" placeholder=\"100\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Temperature Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>🌡️</i> Temperature\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (°C)</label>\n            <input type=\"number\" ng-model=\"temperature_min\" min=\"0\" max=\"50\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (°C)</label>\n            <input type=\"number\" ng-model=\"temperature_max\" min=\"0\" max=\"50\" placeholder=\"50\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Light Intensity Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>☀️</i> Light Intensity\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (lux)</label>\n            <input type=\"number\" ng-model=\"light_intensity_min\" min=\"0\" max=\"10000\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (lux)</label>\n            <input type=\"number\" ng-model=\"light_intensity_max\" min=\"0\" max=\"10000\" placeholder=\"10000\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Soil Moisture Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>🌱</i> Soil Moisture\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (%)</label>\n            <input type=\"number\" ng-model=\"soil_moisture_min\" min=\"0\" max=\"100\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (%)</label>\n            <input type=\"number\" ng-model=\"soil_moisture_max\" min=\"0\" max=\"100\" placeholder=\"100\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Livestock Card -->\n      <div class=\"card livestock-card\">\n        <div class=\"card-title\">\n          <i>❤️</i> Livestock Heart Rate\n        </div>\n        <div class=\"livestock-section\">\n          <div class=\"card-title\">Chicken</div>\n          <div class=\"input-group\">\n            <div class=\"input-wrapper\">\n              <label>Min (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock_chicken_min\" min=\"0\" max=\"200\" placeholder=\"0\">\n            </div>\n            <div class=\"input-wrapper\">\n              <label>Max (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock_chicken_max\" min=\"0\" max=\"200\" placeholder=\"200\">\n            </div>\n          </div>\n        </div>\n        <div class=\"livestock-section\">\n          <div class=\"card-title\">Cow</div>\n          <div class=\"input-group\">\n            <div class=\"input-wrapper\">\n              <label>Min (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock_cow_min\" min=\"0\" max=\"100\" placeholder=\"0\">\n            </div>\n            <div class=\"input-wrapper\">\n              <label>Max (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock_cow_max\" min=\"0\" max=\"100\" placeholder=\"100\">\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"button-container\">\n      <button ng-click=\"send({payload})\">Save Configuration</button>\n    </div>\n  </div>\n</body>\n\n</html>\n\n<script>\n  (function(scope) {\n  // Initialize default values in the scope\n  scope.humidity_min = 25;\n  scope.humidity_max = 90;\n  scope.temperature_min = 3;\n  scope.temperature_max = 35;\n  scope.light_intensity_min = 10000;\n  scope.light_intensity_max = 56000;\n  scope.soil_moisture_min = 17;\n  scope.soil_moisture_max = 38;\n  scope.livestock_chicken_min = 200;\n  scope.livestock_chicken_max = 299.95;\n  scope.livestock_cow_min = 200;\n  scope.livestock_cow_max = 299.95;\n\n  // Update payload dynamically when values change\n  scope.$watchGroup([\n    'humidity_min', 'humidity_max',\n    'temperature_min', 'temperature_max',\n    'light_intensity_min', 'light_intensity_max',\n    'soil_moisture_min', 'soil_moisture_max',\n    'livestock_chicken_min', 'livestock_chicken_max',\n    'livestock_cow_min', 'livestock_cow_max'\n  ], function(newValues) {\n    scope.payload = {\n      humidity: {\n        min: parseInt(newValues[0]) || 25,\n        max: parseInt(newValues[1]) || 90\n      },\n      temperature: {\n        min: parseInt(newValues[2]) || 3,\n        max: parseInt(newValues[3]) || 35\n      },\n      light_intensity: {\n        min: parseInt(newValues[4]) || 10000,\n        max: parseInt(newValues[5]) || 56000\n      },\n      soil_moisture: {\n        min: parseInt(newValues[6]) || 17,\n        max: parseInt(newValues[7]) || 38\n      },\n      livestock: {\n        chicken: {\n          min: parseInt(newValues[8]) || 200,\n          max: parseInt(newValues[9]) || 299.95\n        },\n        cow: {\n          min: parseInt(newValues[10]) || 200,\n          max: parseInt(newValues[11]) || 299.95\n        }\n      }\n    };\n  }\n  );\n})(scope);\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 320,
+        "y": 680,
+        "wires": [
+            [
+                "be0ecefb77a16e45",
+                "fb32ccff645786c8"
+            ]
+        ]
+    },
+    {
+        "id": "fb32ccff645786c8",
+        "type": "function",
+        "z": "9f6d8303fea14cfb",
+        "name": "function 1",
+        "func": "let obj = { payload: msg}\nreturn obj;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 720,
+        "wires": [
+            [
+                "3b86352fd9b98737"
+            ]
+        ]
+    }
+]
