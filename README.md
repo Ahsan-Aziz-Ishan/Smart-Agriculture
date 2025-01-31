@@ -31,7 +31,7 @@ Here are things you need to have on your computer beforehand.
    docker-compose up -d
    ```
 3. Navigate to http://localhost:3000/, where you can see the dashboard. Use the following credentials: username=admin, password=prom-operator.
-4. Navigate to http://localhost:1880/ui, where you can see the Sensor Configuration page. You can get your chat-id by messaging @get_id_bot in Telegram. This input accepts comma separated values without space.
+4. Navigate to http://localhost:1880/ui, where you can see the Sensor Configuration page. You can get your chat-id by messaging @get_id_bot in Telegram. This input accepts comma separated values without space. You need to initiate a conversation with @smart_agri_univaq_bot to get the updates
 
 ![Alert Config](https://github.com/Ahsan-Aziz-Ishan/Smart-Agriculture/blob/master/images/Alert%20Configuration.png)
 
