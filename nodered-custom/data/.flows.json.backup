@@ -8,6 +8,14 @@
         "env": []
     },
     {
+        "id": "43b35cc369b69291",
+        "type": "tab",
+        "label": "PostGres",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "dde0cc6d0e5d357d",
         "type": "group",
         "z": "9f6d8303fea14cfb",
@@ -222,6 +230,31 @@
         "className": ""
     },
     {
+        "id": "983d6594b0e55415",
+        "type": "postgreSQLConfig",
+        "name": "dbConn",
+        "host": "172.16.0.110",
+        "hostFieldType": "str",
+        "port": "5432",
+        "portFieldType": "num",
+        "database": "se4iot",
+        "databaseFieldType": "str",
+        "ssl": "false",
+        "sslFieldType": "bool",
+        "applicationName": "",
+        "applicationNameType": "str",
+        "max": "10",
+        "maxFieldType": "num",
+        "idle": "1000",
+        "idleFieldType": "num",
+        "connectionTimeout": "10000",
+        "connectionTimeoutFieldType": "num",
+        "user": "root",
+        "userFieldType": "str",
+        "password": "password",
+        "passwordFieldType": "str"
+    },
+    {
         "id": "5b15036655893e18",
         "type": "mqtt in",
         "z": "9f6d8303fea14cfb",
@@ -324,7 +357,8 @@
         "y": 360,
         "wires": [
             [
-                "bbbad50cc84d86f6"
+                "bbbad50cc84d86f6",
+                "9e97a8931ec90206"
             ]
         ]
     },
@@ -350,7 +384,7 @@
         "type": "function",
         "z": "9f6d8303fea14cfb",
         "name": "Compare Threshold",
-        "func": "if (global.get(\"alerts\")?.enabled) {\n    let conf = global.get(\"sensor\")?.conf?.payload;\n    if (conf === null || conf === undefined) {\n        conf = { \"humidity\": { \"min\": 25, \"max\": 90 }, \"temperature\": { \"min\": 3, \"max\": 35 }, \"light_intensity\": { \"min\": 10000, \"max\": 56000 }, \"soil_moisture\": { \"min\": 17, \"max\": 38 }, \"livestock\": { \"chicken\": { \"min\": 200, \"max\": 299 }, \"cow\": { \"min\": 200, \"max\": 299 } } }\n    }\n    let obj = {\"payload\": {}}\n    for (let index = 0; index < msg.payload.length; index++) {\n        const element = msg.payload[index];\n        \n        if (element[\"_field\"] === \"humidity\") {\n            if (element[\"_value\"] > conf.humidity.max || element[\"_value\"] < conf.humidity.min) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] +\n                    \", Humidity above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n        if (element[\"_field\"] === \"temperature\") {\n            if (element[\"_value\"] > conf.temperature.max ) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \n                    \", Temperature above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n        if (element[\"_field\"] ===  \"soilMoisture\") {\n            if (element[\"_value\"] > conf.soil_moisture.max || element[\"_value\"] < conf.soilMoisture.min) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \n                    \", Soil Moisture above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n\n        if (element[\"_field\"] === \"lightIntensity\") {\n            if (element[\"_value\"] > conf.light_intensity.max) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] +\n                    \", Light Intensity above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n\n        if (element[\"_field\"] === \"livestock_heartbeat\") {\n            if ((element[\"animal\"] === \"chicken\" && element[\"_value\"] > conf.livestock.chicken.max) || (element[\"animal\"] === \"cow\" && element[\"_value\"] > conf.livestock.cow.max))  {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \", Animal = \" + element[\"animal\"] +\n                    \", AnimalId - \" + element[\"animalId\"] + \", livestock heartbeat above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n            \n    }\n    obj.payload[\"type\"] = \"message\"\n    obj.payload[\"chatId\"] = context.get(\"telegram\")?.chatId.split(\",\")\n    if (obj.payload.content != null) {\n        return obj\n    } \n}",
+        "func": "if (global.get(\"alerts\")?.enabled) {\n    let conf = global.get(\"sensor\")?.conf?.payload;\n    if (conf === null || conf === undefined) {\n        conf = { \"humidity\": { \"min\": 25, \"max\": 90 }, \"temperature\": { \"min\": 3, \"max\": 35 }, \"light_intensity\": { \"min\": 10000, \"max\": 56000 }, \"soil_moisture\": { \"min\": 17, \"max\": 38 }, \"livestock\": { \"chicken\": { \"min\": 200, \"max\": 299 }, \"cow\": { \"min\": 200, \"max\": 299 } } }\n    }\n    let obj = {\"payload\": {}}\n    for (let index = 0; index < msg.payload.length; index++) {\n        const element = msg.payload[index];\n        \n        if (element[\"_field\"] === \"humidity\") {\n            if (element[\"_value\"] > conf.humidity.max || element[\"_value\"] < conf.humidity.min) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] +\n                    \", Humidity above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n        if (element[\"_field\"] === \"temperature\") {\n            if (element[\"_value\"] > conf.temperature.max ) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \n                    \", Temperature above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n        if (element[\"_field\"] ===  \"soilMoisture\") {\n            if (element[\"_value\"] > conf.soil_moisture.max || element[\"_value\"] < conf.soil_moisture.min) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \n                    \", Soil Moisture above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n\n        if (element[\"_field\"] === \"lightIntensity\") {\n            if (element[\"_value\"] > conf.light_intensity.max) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] +\n                    \", Light Intensity above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n\n        if (element[\"_field\"] === \"livestock\") {\n            let animal = element[\"animal\"]\n            if ((element[\"_value\"] > conf[animal]?.max))  {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \", Animal = \" + element[\"animal\"] +\n                    \", AnimalId - \" + element[\"animalId\"] + \", livestock heartbeat above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n            \n    }\n    obj.payload[\"type\"] = \"message\"\n    obj.payload[\"chatId\"] = global.get(\"telegram\")?.chatId.split(\",\")\n    if (obj.payload.content != null) {\n        return obj\n    } \n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -567,7 +601,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 720,
+        "x": 740,
         "y": 740,
         "wires": [
             []
@@ -583,7 +617,7 @@
         "order": 3,
         "width": "0",
         "height": "0",
-        "format": "<!DOCTYPE html>\n<html>\n\n<head>\n  <style>\n    * {\n      box-sizing: border-box;\n      margin: 0;\n      padding: 0;\n    }\n\n    body {\n      font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;\n      padding: 20px;\n      background: #f5f5f5;\n    }\n\n    .dashboard {\n      max-width: 1200px;\n      margin: 0 auto;\n    }\n\n    .grid {\n      display: grid;\n      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n      gap: 20px;\n      margin-bottom: 20px;\n    }\n\n    .card {\n      background: white;\n      border-radius: 8px;\n      padding: 20px;\n      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n    }\n\n    .card-title {\n      color: #2c3e50;\n      font-size: 1.1em;\n      font-weight: 600;\n      margin-bottom: 15px;\n      display: flex;\n      align-items: center;\n      gap: 8px;\n    }\n\n    .card-title i {\n      color: #3498db;\n    }\n\n    .input-group {\n      display: grid;\n      grid-template-columns: 1fr 1fr;\n      gap: 15px;\n      margin-bottom: 10px;\n    }\n\n    .input-wrapper {\n      display: flex;\n      flex-direction: column;\n    }\n\n    label {\n      font-size: 0.9em;\n      color: #666;\n      margin-bottom: 5px;\n    }\n\n    input[type=\"number\"] {\n      width: 100%;\n      padding: 8px 12px;\n      border: 1px solid #ddd;\n      border-radius: 4px;\n      font-size: 14px;\n      transition: border-color 0.2s;\n    }\n\n    input[type=\"number\"]:focus {\n      border-color: #3498db;\n      outline: none;\n    }\n\n    .livestock-card {\n      grid-column: span 2;\n    }\n\n    .livestock-section {\n      margin-bottom: 20px;\n    }\n\n    .livestock-section:last-child {\n      margin-bottom: 0;\n    }\n\n    .button-container {\n      display: flex;\n      justify-content: flex-end;\n      padding: 20px 0;\n    }\n\n    button {\n      background: #3498db;\n      color: white;\n      border: none;\n      padding: 10px 20px;\n      border-radius: 4px;\n      cursor: pointer;\n      font-size: 14px;\n      transition: background-color 0.2s;\n    }\n\n    button:hover {\n      background: #2980b9;\n    }\n\n    @media (max-width: 768px) {\n      .livestock-card {\n        grid-column: span 1;\n      }\n    }\n  </style>\n</head>\n\n<body>\n  <div class=\"dashboard\">\n    <div class=\"grid\">\n      <!-- Humidity Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>💧</i> Humidity Threshold\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (%)</label>\n            <input type=\"number\" ng-model=\"humidity_min\" min=\"0\" max=\"100\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (%)</label>\n            <input type=\"number\" ng-model=\"humidity_max\" min=\"0\" max=\"100\" placeholder=\"100\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Temperature Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>🌡️</i> Temperature\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (°C)</label>\n            <input type=\"number\" ng-model=\"temperature_min\" min=\"0\" max=\"50\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (°C)</label>\n            <input type=\"number\" ng-model=\"temperature_max\" min=\"0\" max=\"50\" placeholder=\"50\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Light Intensity Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>☀️</i> Light Intensity\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (lux)</label>\n            <input type=\"number\" ng-model=\"light_intensity_min\" min=\"0\" max=\"10000\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (lux)</label>\n            <input type=\"number\" ng-model=\"light_intensity_max\" min=\"0\" max=\"10000\" placeholder=\"10000\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Soil Moisture Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>🌱</i> Soil Moisture\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (%)</label>\n            <input type=\"number\" ng-model=\"soil_moisture_min\" min=\"0\" max=\"100\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (%)</label>\n            <input type=\"number\" ng-model=\"soil_moisture_max\" min=\"0\" max=\"100\" placeholder=\"100\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Livestock Card -->\n      <div class=\"card livestock-card\">\n        <div class=\"card-title\">\n          <i>❤️</i> Livestock Heart Rate\n        </div>\n        <div class=\"livestock-section\">\n          <div class=\"card-title\">Chicken</div>\n          <div class=\"input-group\">\n            <div class=\"input-wrapper\">\n              <label>Min (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock_chicken_min\" min=\"0\" max=\"200\" placeholder=\"0\">\n            </div>\n            <div class=\"input-wrapper\">\n              <label>Max (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock_chicken_max\" min=\"0\" max=\"200\" placeholder=\"200\">\n            </div>\n          </div>\n        </div>\n        <div class=\"livestock-section\">\n          <div class=\"card-title\">Cow</div>\n          <div class=\"input-group\">\n            <div class=\"input-wrapper\">\n              <label>Min (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock_cow_min\" min=\"0\" max=\"100\" placeholder=\"0\">\n            </div>\n            <div class=\"input-wrapper\">\n              <label>Max (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock_cow_max\" min=\"0\" max=\"100\" placeholder=\"100\">\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"button-container\">\n      <button ng-click=\"send({payload})\">Save Configuration</button>\n    </div>\n  </div>\n</body>\n\n</html>\n\n<script>\n  (function(scope) {\n  // Initialize default values in the scope\n  scope.humidity_min = 25;\n  scope.humidity_max = 90;\n  scope.temperature_min = 3;\n  scope.temperature_max = 35;\n  scope.light_intensity_min = 10000;\n  scope.light_intensity_max = 56000;\n  scope.soil_moisture_min = 17;\n  scope.soil_moisture_max = 38;\n  scope.livestock_chicken_min = 200;\n  scope.livestock_chicken_max = 299.95;\n  scope.livestock_cow_min = 200;\n  scope.livestock_cow_max = 299.95;\n\n  // Update payload dynamically when values change\n  scope.$watchGroup([\n    'humidity_min', 'humidity_max',\n    'temperature_min', 'temperature_max',\n    'light_intensity_min', 'light_intensity_max',\n    'soil_moisture_min', 'soil_moisture_max',\n    'livestock_chicken_min', 'livestock_chicken_max',\n    'livestock_cow_min', 'livestock_cow_max'\n  ], function(newValues) {\n    scope.payload = {\n      humidity: {\n        min: parseInt(newValues[0]) || 25,\n        max: parseInt(newValues[1]) || 90\n      },\n      temperature: {\n        min: parseInt(newValues[2]) || 3,\n        max: parseInt(newValues[3]) || 35\n      },\n      light_intensity: {\n        min: parseInt(newValues[4]) || 10000,\n        max: parseInt(newValues[5]) || 56000\n      },\n      soil_moisture: {\n        min: parseInt(newValues[6]) || 17,\n        max: parseInt(newValues[7]) || 38\n      },\n      livestock: {\n        chicken: {\n          min: parseInt(newValues[8]) || 200,\n          max: parseInt(newValues[9]) || 299.95\n        },\n        cow: {\n          min: parseInt(newValues[10]) || 200,\n          max: parseInt(newValues[11]) || 299.95\n        }\n      }\n    };\n  }\n  );\n})(scope);\n</script>",
+        "format": "<!DOCTYPE html>\n<html>\n\n<head>\n  <style>\n    * {\n      box-sizing: border-box;\n      margin: 0;\n      padding: 0;\n    }\n\n    body {\n      font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;\n      padding: 20px;\n      background: #f5f5f5;\n    }\n\n    .dashboard {\n      max-width: 1200px;\n      margin: 0 auto;\n    }\n\n    .grid {\n      display: grid;\n      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n      gap: 20px;\n      margin-bottom: 20px;\n    }\n\n    .card {\n      background: white;\n      border-radius: 8px;\n      padding: 20px;\n      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n    }\n\n    .card-title {\n      color: #2c3e50;\n      font-size: 1.1em;\n      font-weight: 600;\n      margin-bottom: 15px;\n      display: flex;\n      align-items: center;\n      gap: 8px;\n    }\n\n    .card-title i {\n      color: #3498db;\n    }\n\n    .input-group {\n      display: grid;\n      grid-template-columns: 1fr 1fr;\n      gap: 15px;\n      margin-bottom: 10px;\n    }\n\n    .input-wrapper {\n      display: flex;\n      flex-direction: column;\n    }\n\n    label {\n      font-size: 0.9em;\n      color: #666;\n      margin-bottom: 5px;\n    }\n\n    input[type=\"number\"] {\n      width: 100%;\n      padding: 8px 12px;\n      border: 1px solid #ddd;\n      border-radius: 4px;\n      font-size: 14px;\n      transition: border-color 0.2s;\n    }\n\n    input[type=\"number\"]:focus {\n      border-color: #3498db;\n      outline: none;\n    }\n\n    .livestock-card {\n      grid-column: span 2;\n    }\n\n    .livestock-section {\n      margin-bottom: 20px;\n    }\n\n    .livestock-section:last-child {\n      margin-bottom: 0;\n    }\n\n    .button-container {\n      display: flex;\n      justify-content: flex-end;\n      padding: 20px 0;\n    }\n\n    button {\n      background: #3498db;\n      color: white;\n      border: none;\n      padding: 10px 20px;\n      border-radius: 4px;\n      cursor: pointer;\n      font-size: 14px;\n      transition: background-color 0.2s;\n    }\n\n    button:hover {\n      background: #2980b9;\n    }\n\n    @media (max-width: 768px) {\n      .livestock-card {\n        grid-column: span 1;\n      }\n    }\n  </style>\n</head>\n\n<body>\n  <div class=\"dashboard\">\n    <div class=\"grid\">\n      <!-- Humidity Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>💧</i> Humidity Threshold\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (%)</label>\n            <input type=\"number\" ng-model=\"humidity_min\" min=\"0\" max=\"100\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (%)</label>\n            <input type=\"number\" ng-model=\"humidity_max\" min=\"0\" max=\"100\" placeholder=\"100\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Temperature Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>🌡️</i> Temperature\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (°C)</label>\n            <input type=\"number\" ng-model=\"temperature_min\" min=\"0\" max=\"50\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (°C)</label>\n            <input type=\"number\" ng-model=\"temperature_max\" min=\"0\" max=\"50\" placeholder=\"50\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Light Intensity Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>☀️</i> Light Intensity\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (lux)</label>\n            <input type=\"number\" ng-model=\"light_intensity_min\" min=\"0\" max=\"10000\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (lux)</label>\n            <input type=\"number\" ng-model=\"light_intensity_max\" min=\"0\" max=\"10000\" placeholder=\"10000\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Soil Moisture Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>🌱</i> Soil Moisture\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (%)</label>\n            <input type=\"number\" ng-model=\"soil_moisture_min\" min=\"0\" max=\"100\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (%)</label>\n            <input type=\"number\" ng-model=\"soil_moisture_max\" min=\"0\" max=\"100\" placeholder=\"100\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Livestock Card -->\n      <div class=\"card livestock-card\">\n        <div class=\"card-title\">\n          <i>❤️</i> Livestock Heart Rate\n        </div>\n        <div class=\"livestock-section\" ng-repeat=\"animal in msg.val.animals\">\n          <div class=\"card-title\">{{animal}}</div>\n          <div class=\"input-group\">\n            <div class=\"input-wrapper\">\n              <label>Min (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock[animal].min\" min=\"0\" max=\"200\" placeholder=\"0\">\n            </div>\n            <div class=\"input-wrapper\">\n              <label>Max (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock[animal].max\" min=\"0\" max=\"200\" placeholder=\"200\">\n            </div>\n          </div>\n        </div>\n        <!-- <div class=\"livestock-section\">\n          <div class=\"card-title\">Cow</div>\n          <div class=\"input-group\">\n            <div class=\"input-wrapper\">\n              <label>Min (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock_cow_min\" min=\"0\" max=\"100\" placeholder=\"0\">\n            </div>\n            <div class=\"input-wrapper\">\n              <label>Max (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock_cow_max\" min=\"0\" max=\"100\" placeholder=\"100\">\n            </div>\n          </div>\n        </div> -->\n      </div>\n    </div>\n\n    <div class=\"button-container\">\n      <button ng-click=\"send({payload})\">Save Configuration</button>\n    </div>\n  </div>\n</body>\n\n</html>\n\n<script>\n  (function(scope) {\n  // Initialize base values (non-livestock part stays the same)\n  scope.humidity_min = 25;\n  scope.humidity_max = 90;\n  scope.temperature_min = 3;\n  scope.temperature_max = 35;\n  scope.light_intensity_min = 10000;\n  scope.light_intensity_max = 56000;\n  scope.soil_moisture_min = 17;\n  scope.soil_moisture_max = 38;\n\n  // Initialize livestock object\n  scope.livestock = {};\n  \n  // Capitalize filter for animal names\n  scope.capitalize = function(text) {\n    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();\n  };\n\n  // Initialize livestock values when msg.payload changes\n  scope.$watch('msg.val.animals', function(animals) {\n    if (animals) {\n      animals.forEach(animal => {\n        if (!scope.livestock[animal]) {\n          scope.livestock[animal] = {\n            min: 200,\n            max: 299.95\n          };\n        }\n      });\n    }\n  });\n\n  // Watch for changes and update payload\n  scope.$watch('[humidity_min, humidity_max, temperature_min, temperature_max, light_intensity_min, light_intensity_max, soil_moisture_min, soil_moisture_max, livestock]', \n    function(newValues) {\n      scope.payload = {\n        humidity: {\n          min: parseInt(newValues[0]) || 25,\n          max: parseInt(newValues[1]) || 90\n        },\n        temperature: {\n          min: parseInt(newValues[2]) || 3,\n          max: parseInt(newValues[3]) || 35\n        },\n        light_intensity: {\n          min: parseInt(newValues[4]) || 10000,\n          max: parseInt(newValues[5]) || 56000\n        },\n        soil_moisture: {\n          min: parseInt(newValues[6]) || 17,\n          max: parseInt(newValues[7]) || 38\n        },\n        livestock: newValues[8]\n      };\n    }, true\n  );\n})(scope);\n</script>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "resendOnRefresh": true,
@@ -602,19 +636,20 @@
         "id": "fb32ccff645786c8",
         "type": "function",
         "z": "9f6d8303fea14cfb",
-        "name": "function 1",
-        "func": "let obj = { payload: msg}\nreturn obj;",
+        "name": "update",
+        "func": "let obj = { payload: msg}\nif(!obj.payload?.animals) return obj;\nelse return null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 500,
+        "x": 520,
         "y": 720,
         "wires": [
             [
-                "3b86352fd9b98737"
+                "3b86352fd9b98737",
+                "be0ecefb77a16e45"
             ]
         ]
     },
@@ -665,6 +700,247 @@
         "reg": false,
         "x": 610,
         "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ee410cde54c4c608",
+        "type": "inject",
+        "z": "9f6d8303fea14cfb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 920,
+        "wires": [
+            [
+                "951187e41075fa47"
+            ]
+        ]
+    },
+    {
+        "id": "951187e41075fa47",
+        "type": "function",
+        "z": "9f6d8303fea14cfb",
+        "name": "query livestocks",
+        "func": "msg.query = `\nimport \"influxdata/influxdb/schema\"\nschema.tagValues(\n    bucket: \"se4iot\",\n    tag: \"animal\"\n)\n`\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 1000,
+        "wires": [
+            [
+                "3babf9e33122be20"
+            ]
+        ]
+    },
+    {
+        "id": "3babf9e33122be20",
+        "type": "influxdb in",
+        "z": "9f6d8303fea14cfb",
+        "influxdb": "3fb96dba9d5da216",
+        "name": "InfluxDB",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "univaq",
+        "x": 600,
+        "y": 1000,
+        "wires": [
+            [
+                "5df9b35a96c606da"
+            ]
+        ]
+    },
+    {
+        "id": "5df9b35a96c606da",
+        "type": "function",
+        "z": "9f6d8303fea14cfb",
+        "name": "parse livestocks",
+        "func": "let data = {\n    \"val\": {\n         animals: msg.payload.map(m => m._value)\n    }\n}\nreturn data;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 920,
+        "wires": [
+            [
+                "bf929898beb6fa25",
+                "2b1cf69b21f0d3d3"
+            ]
+        ]
+    },
+    {
+        "id": "bf929898beb6fa25",
+        "type": "change",
+        "z": "9f6d8303fea14cfb",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "livestock_names",
+                "tot": "global",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 820,
+        "y": 980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9e97a8931ec90206",
+        "type": "debug",
+        "z": "9f6d8303fea14cfb",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "9c79513d49e5f343",
+        "type": "inject",
+        "z": "43b35cc369b69291",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 240,
+        "wires": [
+            [
+                "78abe0f07e37d885"
+            ]
+        ]
+    },
+    {
+        "id": "78abe0f07e37d885",
+        "type": "postgresql",
+        "z": "43b35cc369b69291",
+        "name": "",
+        "query": "CREATE TABLE if not exists thresholds (\n        sensor_min numeric,\n        sensor_max numeric,\n        sensor_type varchar(20),\n        is_livestock boolean,\n        livestock_name varchar(20)\n    );",
+        "postgreSQLConfig": "983d6594b0e55415",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 560,
+        "y": 320,
+        "wires": [
+            [
+                "f334a69a5b89073c"
+            ]
+        ]
+    },
+    {
+        "id": "f334a69a5b89073c",
+        "type": "debug",
+        "z": "43b35cc369b69291",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "170347d9f33a25fa",
+        "type": "inject",
+        "z": "43b35cc369b69291",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 420,
+        "wires": [
+            [
+                "a2dbc59f2ef01291"
+            ]
+        ]
+    },
+    {
+        "id": "a2dbc59f2ef01291",
+        "type": "function",
+        "z": "43b35cc369b69291",
+        "name": "function 2",
+        "func": "msg.payload = `\nimport \"influxdata/influxdb/schema\"\nschema.tagValues(\n    bucket: \"se4iot\",\n    tag: \"animal\"\n)\n`\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 500,
         "wires": [
             []
         ]

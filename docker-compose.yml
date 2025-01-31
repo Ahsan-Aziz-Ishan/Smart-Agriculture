@@ -87,6 +87,7 @@ services:
       - SENSOR_INTERVAL_PERIOD=5
       - NUMBER_FIRMS=2
       - NUMBER_AREAS=3
+      - LIVESTOCK_NAMES=cow,chicken
     networks:
       iot-net:
         ipv4_address: 172.16.0.109

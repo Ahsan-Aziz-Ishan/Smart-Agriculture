@@ -9,11 +9,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 @Component
 public class Simulator {
@@ -46,6 +44,9 @@ public class Simulator {
     @Value("${number.areas}")
     private int areas;
 
+    @Value("${livestock.names}")
+    private String livestockNames;
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -64,12 +65,11 @@ public class Simulator {
 
     private void sendLiveStockReadings(int firmId, int areaId) throws JsonProcessingException {
         if (livestockEnabled) {
-            var animals = new ArrayList<String>();
-            animals.add("chicken");
-            animals.add("cow");
+            var animals = Arrays.stream(livestockNames.split(",")).map(String::trim).toList();
             for (var animal : animals) {
                 for (int i = 1; i <= 10; i++) {
                     var sensors = new HashMap<String, Object>();
+                    sensors.put("time", System.currentTimeMillis());
                     sensors.put("livestock_heartbeat", generateRandomValue(200, 300));
                     var tags = new HashMap<String, Object>();
                     tags.put("firmId", firmId);
@@ -87,6 +87,7 @@ public class Simulator {
 
     private void sendOutdoorSensorReadings(int firmId, int areaId) throws JsonProcessingException {
         var sensors = new HashMap<String, Object>();
+        sensors.put("time", System.currentTimeMillis());
 
         if (humidityEnabled) {
             sensors.put("humidity", generateRandomValue(20,100));
