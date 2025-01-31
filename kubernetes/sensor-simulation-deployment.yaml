@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.31.2 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sensor-simulation
+  name: sensor-simulation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: sensor-simulation
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.31.2 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/project-iot-net: "true"
+        io.kompose.service: sensor-simulation
+    spec:
+      containers:
+        - env:
+            - name: MQTT_SERVER_PASSWORD
+            - name: MQTT_SERVER_TOPIC
+              value: smart-sensors
+            - name: MQTT_SERVER_URI
+              value: tcp://iot-mosquitto:1883
+            - name: MQTT_SERVER_USERNAME
+            - name: NUMBER_AREAS
+              value: "3"
+            - name: NUMBER_FIRMS
+              value: "2"
+            - name: SENSOR_HUMIDITY_ENABLED
+              value: "true"
+            - name: SENSOR_INTERVAL_PERIOD
+              value: "5"
+            - name: SENSOR_LIGHTINTENSITY_ENABLED
+              value: "true"
+            - name: SENSOR_LIVESTOCK_ENABLED
+              value: "true"
+            - name: SENSOR_SOILMOISTURE_ENABLED
+              value: "true"
+            - name: SENSOR_TEMPERATURE_ENABLED
+              value: "true"
+          image: sensor-simulation:latest
+          name: iot-sensor-simulation
+          resources: {}
+          volumeMounts:
+            - mountPath: /data
+              name: sensor-simulation-claim0
+      restartPolicy: Always
+      volumes:
+        - name: sensor-simulation-claim0
+          persistentVolumeClaim:
+            claimName: sensor-simulation-claim0
+status: {}

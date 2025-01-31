@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.31.2 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: influxdb
+  name: influxdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: influxdb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.31.2 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/project-iot-net: "true"
+        io.kompose.service: influxdb
+    spec:
+      containers:
+        - env:
+            - name: DOCKER_INFLUXDB_INIT_ADMIN_TOKEN
+              value: Ga8nVsXP4FAe5_M1a5j7uCa4zO_u_M9oUsO8wUSWh_wPbR3clc9ZTv420Li9adOVCPl1tGvn6hLHfI5gP7Lm5A==
+            - name: DOCKER_INFLUXDB_INIT_BUCKET
+              value: se4iot
+            - name: DOCKER_INFLUXDB_INIT_MODE
+              value: setup
+            - name: DOCKER_INFLUXDB_INIT_ORG
+              value: univaq
+            - name: DOCKER_INFLUXDB_INIT_PASSWORD
+              value: admin1234!
+            - name: DOCKER_INFLUXDB_INIT_RETENTION
+              value: 1w
+            - name: DOCKER_INFLUXDB_INIT_USERNAME
+              value: admin
+          image: influxdb:2.7.4
+          name: iot-influxdb
+          ports:
+            - containerPort: 8086
+              hostPort: 8086
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/influxdb2
+              name: influxdb-claim0
+            - mountPath: /etc/influxdb2
+              name: influxdb-claim1
+      restartPolicy: Always
+      volumes:
+        - name: influxdb-claim0
+          persistentVolumeClaim:
+            claimName: influxdb-claim0
+        - name: influxdb-claim1
+          persistentVolumeClaim:
+            claimName: influxdb-claim1
+status: {}
