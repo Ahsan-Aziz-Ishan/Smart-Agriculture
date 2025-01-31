@@ -2,7 +2,7 @@
 
 Imagine transforming traditional farming into a harmonious blend of time-honored wisdom and modern innovation. Smart agriculture brings farmers and technology together, helping them better understand and care for their land. By thoughtfully monitoring soil health, weather patterns, and growing conditions, this system becomes a helpful partner in farming - sending timely alerts when crops and livestock need attention and presenting clear, meaningful insights that help farmers make informed decisions. The goal is to support farmers in nurturing their crops and livestock more effectively.
 
-![[Grafana Dashboard.png]]
+![[images/Grafana Dashboard.png]]
 ## Architecture
 
 ![[Architecture.png]]
