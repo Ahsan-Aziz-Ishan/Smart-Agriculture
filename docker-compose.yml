@@ -56,20 +56,6 @@ services:
         ipv4_address: 172.16.0.104
 
 
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: iot-rabbitmq
-    ports:
-      - "5672:5672"    # Port for RabbitMQ client connections
-      - "15672:15672"  # Port for RabbitMQ management UI
-    environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
-    networks:
-      iot-net:
-        ipv4_address: 172.16.0.105
-
-
   grafana:
     image: grafana/grafana
     container_name: iot-grafana
