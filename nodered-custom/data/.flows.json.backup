@@ -155,38 +155,10 @@
         }
     },
     {
-        "id": "7b6c645b.5efc9c",
-        "type": "MySQLdatabase",
-        "name": "",
-        "host": "host.docker.internal",
-        "port": "3306",
-        "db": "NODERED",
-        "tz": "",
-        "charset": ""
-    },
-    {
         "id": "e38ada7c23eea3a7",
         "type": "global-config",
         "name": "global-config",
         "env": []
-    },
-    {
-        "id": "f373fb80f9b86423",
-        "type": "amqp-broker",
-        "name": "",
-        "host": "host.docker.internal",
-        "port": "5672",
-        "vhost": "/",
-        "tls": false,
-        "credsFromSettings": false
-    },
-    {
-        "id": "mysql-config",
-        "type": "MySQLdatabase",
-        "name": "MySQL",
-        "host": "host.docker.internal",
-        "port": "3306",
-        "db": "IoTData"
     },
     {
         "id": "3fb96dba9d5da216",
@@ -200,7 +172,7 @@
         "tls": "",
         "influxdbVersion": "2.0",
         "url": "http://172.16.0.104:8086",
-        "rejectUnauthorized": true
+        "rejectUnauthorized": false
     },
     {
         "id": "f64b4fd429cab8c6",
@@ -227,40 +199,6 @@
         "useselfsignedcertificate": false,
         "sslterminated": false,
         "verboselogging": false
-    },
-    {
-        "id": "134ae094d355c06d",
-        "type": "chatbot-telegram-node",
-        "botname": "Smart Agri Bot",
-        "usernames": "",
-        "polling": "1000",
-        "store": "",
-        "log": "",
-        "debug": false,
-        "skipMediaFiles": false,
-        "webHook": "",
-        "connectMode": "polling",
-        "storeMessages": true,
-        "enableMissionControl": false,
-        "inspectMessages": true,
-        "chatbotId": ""
-    },
-    {
-        "id": "b25684cafc63f33f",
-        "type": "chatbot-telegram-node",
-        "botname": "Smart Agri Bot",
-        "usernames": "",
-        "polling": "1000",
-        "store": "",
-        "log": "",
-        "debug": false,
-        "skipMediaFiles": false,
-        "webHook": "",
-        "connectMode": "polling",
-        "storeMessages": true,
-        "enableMissionControl": false,
-        "inspectMessages": true,
-        "chatbotId": ""
     },
     {
         "id": "1380860af787f9d0",
@@ -411,7 +349,7 @@
         "type": "function",
         "z": "9f6d8303fea14cfb",
         "name": "Compare Threshold",
-        "func": "if (global.get(\"alerts\").enabled) {\n    let conf = global.get(\"sensor\")?.conf?.payload;\n    let obj = {\"payload\": {}}\n    for (let index = 0; index < msg.payload.length; index++) {\n        const element = msg.payload[index];\n        \n        if (element[\"_field\"] === \"humidity\") {\n            if (element[\"_value\"] > conf.humidity.max || element[\"_value\"] < conf.humidity.min) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] +\n                    \", Humidity above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n        if (element[\"_field\"] === \"temperature\") {\n            if (element[\"_value\"] > conf.temperature.max ) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \n                    \", Temperature above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n        if (element[\"_field\"] ===  \"soilMoisture\") {\n            if (element[\"_value\"] > conf.soilMoisture.max || element[\"_value\"] < conf.soilMoisture.min) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \n                    \", Soil Moisture above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n\n        if (element[\"_field\"] === \"lightIntensity\") {\n            if (element[\"_value\"] > conf.lightIntensity.max) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] +\n                    \", Light Intensity above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n\n        if (element[\"_field\"] === \"livestock_heartbeat\") {\n            if ((element[\"animal\"] === \"chicken\" && element[\"_value\"] > conf.livestock.chicken.max) || (element[\"animal\"] === \"cow\" && element[\"_value\"] > conf.livestock.cow.max))  {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \", Animal = \" + element[\"animal\"] +\n                    \", AnimalId - \" + element[\"animalId\"] + \", livestock heartbeat above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n            \n    }\n    obj.payload[\"type\"] = \"message\"\n    // obj.payload[\"chatId\"] = [-1002257310350]\n    obj.payload[\"chatId\"] = [8097139158]\n    if (obj.payload.content != null) {\n        return obj\n    } \n}",
+        "func": "if (global.get(\"alerts\").enabled) {\n    let conf = global.get(\"sensor\")?.conf?.payload;\n    let obj = {\"payload\": {}}\n    for (let index = 0; index < msg.payload.length; index++) {\n        const element = msg.payload[index];\n        \n        if (element[\"_field\"] === \"humidity\") {\n            if (element[\"_value\"] > conf.humidity.max || element[\"_value\"] < conf.humidity.min) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] +\n                    \", Humidity above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n        if (element[\"_field\"] === \"temperature\") {\n            if (element[\"_value\"] > conf.temperature.max ) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \n                    \", Temperature above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n        if (element[\"_field\"] ===  \"soilMoisture\") {\n            if (element[\"_value\"] > conf.soil_moisture.max || element[\"_value\"] < conf.soilMoisture.min) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \n                    \", Soil Moisture above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n\n        if (element[\"_field\"] === \"lightIntensity\") {\n            if (element[\"_value\"] > conf.light_intensity.max) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] +\n                    \", Light Intensity above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n\n        if (element[\"_field\"] === \"livestock_heartbeat\") {\n            if ((element[\"animal\"] === \"chicken\" && element[\"_value\"] > conf.livestock.chicken.max) || (element[\"animal\"] === \"cow\" && element[\"_value\"] > conf.livestock.cow.max))  {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \", Animal = \" + element[\"animal\"] +\n                    \", AnimalId - \" + element[\"animalId\"] + \", livestock heartbeat above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n            \n    }\n    obj.payload[\"type\"] = \"message\"\n    // obj.payload[\"chatId\"] = [-1002257310350]\n    obj.payload[\"chatId\"] = [8097139158]\n    if (obj.payload.content != null) {\n        return obj\n    } \n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
