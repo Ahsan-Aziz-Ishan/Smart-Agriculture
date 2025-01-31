@@ -64,7 +64,7 @@
             "name": "theme-light",
             "lightTheme": {
                 "default": "#0094CE",
-                "baseColor": "#0094CE",
+                "baseColor": "#921d4b",
                 "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
                 "edited": true,
                 "reset": false
@@ -79,16 +79,17 @@
                 "name": "Untitled Theme 1",
                 "default": "#4B7930",
                 "baseColor": "#4B7930",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "reset": false
             },
             "themeState": {
                 "base-color": {
                     "default": "#0094CE",
-                    "value": "#0094CE",
-                    "edited": false
+                    "value": "#921d4b",
+                    "edited": true
                 },
                 "page-titlebar-backgroundColor": {
-                    "value": "#0094CE",
+                    "value": "#921d4b",
                     "edited": false
                 },
                 "page-backgroundColor": {
@@ -96,11 +97,11 @@
                     "edited": false
                 },
                 "page-sidebar-backgroundColor": {
-                    "value": "#ffffff",
+                    "value": "#333333",
                     "edited": false
                 },
                 "group-textColor": {
-                    "value": "#1bbfff",
+                    "value": "#d22a6c",
                     "edited": false
                 },
                 "group-borderColor": {
@@ -116,7 +117,7 @@
                     "edited": false
                 },
                 "widget-backgroundColor": {
-                    "value": "#0094ce",
+                    "value": "#921d4b",
                     "edited": false
                 },
                 "widget-borderColor": {
@@ -349,7 +350,7 @@
         "type": "function",
         "z": "9f6d8303fea14cfb",
         "name": "Compare Threshold",
-        "func": "if (global.get(\"alerts\")?.enabled) {\n    let conf = global.get(\"sensor\")?.conf?.payload;\n    if (conf === null || conf === undefined) {\n        conf = { \"humidity\": { \"min\": 25, \"max\": 90 }, \"temperature\": { \"min\": 3, \"max\": 35 }, \"light_intensity\": { \"min\": 10000, \"max\": 56000 }, \"soil_moisture\": { \"min\": 17, \"max\": 38 }, \"livestock\": { \"chicken\": { \"min\": 200, \"max\": 299 }, \"cow\": { \"min\": 200, \"max\": 299 } } }\n    }\n    let obj = {\"payload\": {}}\n    for (let index = 0; index < msg.payload.length; index++) {\n        const element = msg.payload[index];\n        \n        if (element[\"_field\"] === \"humidity\") {\n            if (element[\"_value\"] > conf.humidity.max || element[\"_value\"] < conf.humidity.min) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] +\n                    \", Humidity above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n        if (element[\"_field\"] === \"temperature\") {\n            if (element[\"_value\"] > conf.temperature.max ) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \n                    \", Temperature above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n        if (element[\"_field\"] ===  \"soilMoisture\") {\n            if (element[\"_value\"] > conf.soil_moisture.max || element[\"_value\"] < conf.soilMoisture.min) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \n                    \", Soil Moisture above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n\n        if (element[\"_field\"] === \"lightIntensity\") {\n            if (element[\"_value\"] > conf.light_intensity.max) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] +\n                    \", Light Intensity above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n\n        if (element[\"_field\"] === \"livestock_heartbeat\") {\n            if ((element[\"animal\"] === \"chicken\" && element[\"_value\"] > conf.livestock.chicken.max) || (element[\"animal\"] === \"cow\" && element[\"_value\"] > conf.livestock.cow.max))  {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \", Animal = \" + element[\"animal\"] +\n                    \", AnimalId - \" + element[\"animalId\"] + \", livestock heartbeat above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n            \n    }\n    obj.payload[\"type\"] = \"message\"\n    // obj.payload[\"chatId\"] = [-1002257310350]\n    obj.payload[\"chatId\"] = [8097139158]\n    if (obj.payload.content != null) {\n        return obj\n    } \n}",
+        "func": "if (global.get(\"alerts\")?.enabled) {\n    let conf = global.get(\"sensor\")?.conf?.payload;\n    if (conf === null || conf === undefined) {\n        conf = { \"humidity\": { \"min\": 25, \"max\": 90 }, \"temperature\": { \"min\": 3, \"max\": 35 }, \"light_intensity\": { \"min\": 10000, \"max\": 56000 }, \"soil_moisture\": { \"min\": 17, \"max\": 38 }, \"livestock\": { \"chicken\": { \"min\": 200, \"max\": 299 }, \"cow\": { \"min\": 200, \"max\": 299 } } }\n    }\n    let obj = {\"payload\": {}}\n    for (let index = 0; index < msg.payload.length; index++) {\n        const element = msg.payload[index];\n        \n        if (element[\"_field\"] === \"humidity\") {\n            if (element[\"_value\"] > conf.humidity.max || element[\"_value\"] < conf.humidity.min) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] +\n                    \", Humidity above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n        if (element[\"_field\"] === \"temperature\") {\n            if (element[\"_value\"] > conf.temperature.max ) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \n                    \", Temperature above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n        if (element[\"_field\"] ===  \"soilMoisture\") {\n            if (element[\"_value\"] > conf.soil_moisture.max || element[\"_value\"] < conf.soilMoisture.min) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \n                    \", Soil Moisture above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n\n        if (element[\"_field\"] === \"lightIntensity\") {\n            if (element[\"_value\"] > conf.light_intensity.max) {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] +\n                    \", Light Intensity above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n\n        if (element[\"_field\"] === \"livestock_heartbeat\") {\n            if ((element[\"animal\"] === \"chicken\" && element[\"_value\"] > conf.livestock.chicken.max) || (element[\"animal\"] === \"cow\" && element[\"_value\"] > conf.livestock.cow.max))  {\n                obj[\"payload\"][\"content\"] = \"Alert: FirmId -\" + element[\"firmId\"] +\n                    \", AreaId - \" + element[\"areaId\"] + \", Animal = \" + element[\"animal\"] +\n                    \", AnimalId - \" + element[\"animalId\"] + \", livestock heartbeat above threshold: \" + element[\"_value\"]\n                break;\n            }\n        }\n            \n    }\n    obj.payload[\"type\"] = \"message\"\n    obj.payload[\"chatId\"] = global.get(\"telegram\")?.chatId.split(\",\")\n    if (obj.payload.content != null) {\n        return obj\n    } \n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -388,7 +389,7 @@
         "label": "Enable Alerts",
         "tooltip": "",
         "group": "a43974e6b6ef8326",
-        "order": 1,
+        "order": 2,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -482,8 +483,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 730,
-        "y": 580,
+        "x": 770,
+        "y": 540,
         "wires": [
             []
         ]
@@ -579,7 +580,7 @@
         "g": "dde0cc6d0e5d357d",
         "group": "a43974e6b6ef8326",
         "name": "Sensor Config",
-        "order": 2,
+        "order": 3,
         "width": "0",
         "height": "0",
         "format": "<!DOCTYPE html>\n<html>\n\n<head>\n  <style>\n    * {\n      box-sizing: border-box;\n      margin: 0;\n      padding: 0;\n    }\n\n    body {\n      font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;\n      padding: 20px;\n      background: #f5f5f5;\n    }\n\n    .dashboard {\n      max-width: 1200px;\n      margin: 0 auto;\n    }\n\n    .grid {\n      display: grid;\n      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n      gap: 20px;\n      margin-bottom: 20px;\n    }\n\n    .card {\n      background: white;\n      border-radius: 8px;\n      padding: 20px;\n      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n    }\n\n    .card-title {\n      color: #2c3e50;\n      font-size: 1.1em;\n      font-weight: 600;\n      margin-bottom: 15px;\n      display: flex;\n      align-items: center;\n      gap: 8px;\n    }\n\n    .card-title i {\n      color: #3498db;\n    }\n\n    .input-group {\n      display: grid;\n      grid-template-columns: 1fr 1fr;\n      gap: 15px;\n      margin-bottom: 10px;\n    }\n\n    .input-wrapper {\n      display: flex;\n      flex-direction: column;\n    }\n\n    label {\n      font-size: 0.9em;\n      color: #666;\n      margin-bottom: 5px;\n    }\n\n    input[type=\"number\"] {\n      width: 100%;\n      padding: 8px 12px;\n      border: 1px solid #ddd;\n      border-radius: 4px;\n      font-size: 14px;\n      transition: border-color 0.2s;\n    }\n\n    input[type=\"number\"]:focus {\n      border-color: #3498db;\n      outline: none;\n    }\n\n    .livestock-card {\n      grid-column: span 2;\n    }\n\n    .livestock-section {\n      margin-bottom: 20px;\n    }\n\n    .livestock-section:last-child {\n      margin-bottom: 0;\n    }\n\n    .button-container {\n      display: flex;\n      justify-content: flex-end;\n      padding: 20px 0;\n    }\n\n    button {\n      background: #3498db;\n      color: white;\n      border: none;\n      padding: 10px 20px;\n      border-radius: 4px;\n      cursor: pointer;\n      font-size: 14px;\n      transition: background-color 0.2s;\n    }\n\n    button:hover {\n      background: #2980b9;\n    }\n\n    @media (max-width: 768px) {\n      .livestock-card {\n        grid-column: span 1;\n      }\n    }\n  </style>\n</head>\n\n<body>\n  <div class=\"dashboard\">\n    <div class=\"grid\">\n      <!-- Humidity Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>💧</i> Humidity Threshold\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (%)</label>\n            <input type=\"number\" ng-model=\"humidity_min\" min=\"0\" max=\"100\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (%)</label>\n            <input type=\"number\" ng-model=\"humidity_max\" min=\"0\" max=\"100\" placeholder=\"100\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Temperature Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>🌡️</i> Temperature\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (°C)</label>\n            <input type=\"number\" ng-model=\"temperature_min\" min=\"0\" max=\"50\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (°C)</label>\n            <input type=\"number\" ng-model=\"temperature_max\" min=\"0\" max=\"50\" placeholder=\"50\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Light Intensity Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>☀️</i> Light Intensity\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (lux)</label>\n            <input type=\"number\" ng-model=\"light_intensity_min\" min=\"0\" max=\"10000\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (lux)</label>\n            <input type=\"number\" ng-model=\"light_intensity_max\" min=\"0\" max=\"10000\" placeholder=\"10000\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Soil Moisture Card -->\n      <div class=\"card\">\n        <div class=\"card-title\">\n          <i>🌱</i> Soil Moisture\n        </div>\n        <div class=\"input-group\">\n          <div class=\"input-wrapper\">\n            <label>Min (%)</label>\n            <input type=\"number\" ng-model=\"soil_moisture_min\" min=\"0\" max=\"100\" placeholder=\"0\">\n          </div>\n          <div class=\"input-wrapper\">\n            <label>Max (%)</label>\n            <input type=\"number\" ng-model=\"soil_moisture_max\" min=\"0\" max=\"100\" placeholder=\"100\">\n          </div>\n        </div>\n      </div>\n\n      <!-- Livestock Card -->\n      <div class=\"card livestock-card\">\n        <div class=\"card-title\">\n          <i>❤️</i> Livestock Heart Rate\n        </div>\n        <div class=\"livestock-section\">\n          <div class=\"card-title\">Chicken</div>\n          <div class=\"input-group\">\n            <div class=\"input-wrapper\">\n              <label>Min (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock_chicken_min\" min=\"0\" max=\"200\" placeholder=\"0\">\n            </div>\n            <div class=\"input-wrapper\">\n              <label>Max (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock_chicken_max\" min=\"0\" max=\"200\" placeholder=\"200\">\n            </div>\n          </div>\n        </div>\n        <div class=\"livestock-section\">\n          <div class=\"card-title\">Cow</div>\n          <div class=\"input-group\">\n            <div class=\"input-wrapper\">\n              <label>Min (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock_cow_min\" min=\"0\" max=\"100\" placeholder=\"0\">\n            </div>\n            <div class=\"input-wrapper\">\n              <label>Max (bpm)</label>\n              <input type=\"number\" ng-model=\"livestock_cow_max\" min=\"0\" max=\"100\" placeholder=\"100\">\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"button-container\">\n      <button ng-click=\"send({payload})\">Save Configuration</button>\n    </div>\n  </div>\n</body>\n\n</html>\n\n<script>\n  (function(scope) {\n  // Initialize default values in the scope\n  scope.humidity_min = 25;\n  scope.humidity_max = 90;\n  scope.temperature_min = 3;\n  scope.temperature_max = 35;\n  scope.light_intensity_min = 10000;\n  scope.light_intensity_max = 56000;\n  scope.soil_moisture_min = 17;\n  scope.soil_moisture_max = 38;\n  scope.livestock_chicken_min = 200;\n  scope.livestock_chicken_max = 299.95;\n  scope.livestock_cow_min = 200;\n  scope.livestock_cow_max = 299.95;\n\n  // Update payload dynamically when values change\n  scope.$watchGroup([\n    'humidity_min', 'humidity_max',\n    'temperature_min', 'temperature_max',\n    'light_intensity_min', 'light_intensity_max',\n    'soil_moisture_min', 'soil_moisture_max',\n    'livestock_chicken_min', 'livestock_chicken_max',\n    'livestock_cow_min', 'livestock_cow_max'\n  ], function(newValues) {\n    scope.payload = {\n      humidity: {\n        min: parseInt(newValues[0]) || 25,\n        max: parseInt(newValues[1]) || 90\n      },\n      temperature: {\n        min: parseInt(newValues[2]) || 3,\n        max: parseInt(newValues[3]) || 35\n      },\n      light_intensity: {\n        min: parseInt(newValues[4]) || 10000,\n        max: parseInt(newValues[5]) || 56000\n      },\n      soil_moisture: {\n        min: parseInt(newValues[6]) || 17,\n        max: parseInt(newValues[7]) || 38\n      },\n      livestock: {\n        chicken: {\n          min: parseInt(newValues[8]) || 200,\n          max: parseInt(newValues[9]) || 299.95\n        },\n        cow: {\n          min: parseInt(newValues[10]) || 200,\n          max: parseInt(newValues[11]) || 299.95\n        }\n      }\n    };\n  }\n  );\n})(scope);\n</script>",
@@ -615,6 +616,57 @@
             [
                 "3b86352fd9b98737"
             ]
+        ]
+    },
+    {
+        "id": "2814eb8d09ea45b3",
+        "type": "ui_text_input",
+        "z": "9f6d8303fea14cfb",
+        "name": "Input ChatID",
+        "label": "Telegram ChatID",
+        "tooltip": "",
+        "group": "a43974e6b6ef8326",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 290,
+        "y": 580,
+        "wires": [
+            [
+                "406a9dbfd7051566"
+            ]
+        ]
+    },
+    {
+        "id": "406a9dbfd7051566",
+        "type": "change",
+        "z": "9f6d8303fea14cfb",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "telegram.chatId",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 580,
+        "wires": [
+            []
         ]
     }
 ]
