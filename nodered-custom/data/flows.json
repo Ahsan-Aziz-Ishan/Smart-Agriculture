@@ -8,14 +8,6 @@
         "env": []
     },
     {
-        "id": "43b35cc369b69291",
-        "type": "tab",
-        "label": "PostGres",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "dde0cc6d0e5d357d",
         "type": "group",
         "z": "9f6d8303fea14cfb",
@@ -228,31 +220,6 @@
         "width": "12",
         "collapse": false,
         "className": ""
-    },
-    {
-        "id": "983d6594b0e55415",
-        "type": "postgreSQLConfig",
-        "name": "dbConn",
-        "host": "172.16.0.110",
-        "hostFieldType": "str",
-        "port": "5432",
-        "portFieldType": "num",
-        "database": "se4iot",
-        "databaseFieldType": "str",
-        "ssl": "false",
-        "sslFieldType": "bool",
-        "applicationName": "",
-        "applicationNameType": "str",
-        "max": "10",
-        "maxFieldType": "num",
-        "idle": "1000",
-        "idleFieldType": "num",
-        "connectionTimeout": "10000",
-        "connectionTimeoutFieldType": "num",
-        "user": "root",
-        "userFieldType": "str",
-        "password": "password",
-        "passwordFieldType": "str"
     },
     {
         "id": "5b15036655893e18",
@@ -814,116 +781,6 @@
         "reg": false,
         "x": 820,
         "y": 980,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "9c79513d49e5f343",
-        "type": "inject",
-        "z": "43b35cc369b69291",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 240,
-        "y": 240,
-        "wires": [
-            [
-                "78abe0f07e37d885"
-            ]
-        ]
-    },
-    {
-        "id": "78abe0f07e37d885",
-        "type": "postgresql",
-        "z": "43b35cc369b69291",
-        "name": "",
-        "query": "CREATE TABLE if not exists thresholds (\n        sensor_min numeric,\n        sensor_max numeric,\n        sensor_type varchar(20),\n        is_livestock boolean,\n        livestock_name varchar(20)\n    );",
-        "postgreSQLConfig": "983d6594b0e55415",
-        "split": false,
-        "rowsPerMsg": 1,
-        "outputs": 1,
-        "x": 560,
-        "y": 320,
-        "wires": [
-            [
-                "f334a69a5b89073c"
-            ]
-        ]
-    },
-    {
-        "id": "f334a69a5b89073c",
-        "type": "debug",
-        "z": "43b35cc369b69291",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 710,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "170347d9f33a25fa",
-        "type": "inject",
-        "z": "43b35cc369b69291",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 100,
-        "y": 420,
-        "wires": [
-            [
-                "a2dbc59f2ef01291"
-            ]
-        ]
-    },
-    {
-        "id": "a2dbc59f2ef01291",
-        "type": "function",
-        "z": "43b35cc369b69291",
-        "name": "function 2",
-        "func": "msg.payload = `\nimport \"influxdata/influxdb/schema\"\nschema.tagValues(\n    bucket: \"se4iot\",\n    tag: \"animal\"\n)\n`\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 330,
-        "y": 500,
         "wires": [
             []
         ]

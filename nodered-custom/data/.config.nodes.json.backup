@@ -451,7 +451,7 @@
                 "types": [
                     "coap request"
                 ],
-                "enabled": true,
+                "enabled": false,
                 "local": false,
                 "user": false,
                 "module": "node-red-contrib-coap",
